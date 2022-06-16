@@ -42,6 +42,6 @@ async def main(connection):
 
     broadcast_to = [  middleLeft, bottomLeft, topCenter, middleCenter, bottomCenter,  topRight  ]
     for session in broadcast_to:
-        await session.async_send_text("cd /home/tcude/docker\n")
+        await session.async_send_text("cd /home/tcude/docker && ls -lah\n")
 
 iterm2.run_until_complete(main)
