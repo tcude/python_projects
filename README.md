@@ -1,3 +1,3 @@
 # Overview
 
-This repository encompasses a few Python scripts as I re-establish familiarity with the language.
+This repository encompasses my Python scripts as I re-establish familiarity with the language.
