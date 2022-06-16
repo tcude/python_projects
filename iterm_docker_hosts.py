@@ -8,6 +8,7 @@ async def main(connection):
     await iterm2.Window.async_create(connection)
     app = await iterm2.async_get_app(connection)
 
+    # Create split panes and make the bottom left one active.
     bottomLeft = app.current_terminal_window.current_tab.current_session
     bottomCenter = await bottomLeft.async_split_pane(vertical=True,before=False)
     bottomRight = await bottomCenter.async_split_pane(vertical=True)
@@ -39,16 +40,8 @@ async def main(connection):
     await middleRight.async_send_text("exit\n", suppress_broadcast=True)
     await bottomRight.async_send_text("exit\n", suppress_broadcast=True)
 
-    broadcast_to = [  middleLeft, bottomLeft, topCenter, middleCenter, bottomCenter,  middleRight  ]
+    broadcast_to = [  middleLeft, bottomLeft, topCenter, middleCenter, bottomCenter,  topRight  ]
     for session in broadcast_to:
         await session.async_send_text("cd /home/tcude/docker\n")
-
-    await middleLeft.async_send_text("cd /home/tcude/docker\n", suppress_broadcast=True)
-    await bottomLeft.async_send_text("cd /home/tcude/docker\n", suppress_broadcast=True)
-    await topCenter.async_send_text("cd /home/tcude/docker\n", suppress_broadcast=True)
-    await middleCenter.async_send_text("cd /home/tcude/docker\n", suppress_broadcast=True)
-    await bottomCenter.async_send_text("cd /home/tcude/docker\n", suppress_broadcast=True)
-    await topRight.async_send_text("cd /home/tcude/docker\n", suppress_broadcast=True)
-    await middleRight.async_send_text("cd /home/tcude/docker\n", suppress_broadcast=True)
 
 iterm2.run_until_complete(main)
