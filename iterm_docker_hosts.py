@@ -9,6 +9,7 @@ async def main(connection):
     app = await iterm2.async_get_app(connection)
 
     # Create split panes and make the bottom left one active.
+    
     bottomLeft = app.current_terminal_window.current_tab.current_session
     bottomCenter = await bottomLeft.async_split_pane(vertical=True,before=False)
     bottomRight = await bottomCenter.async_split_pane(vertical=True)
@@ -18,6 +19,8 @@ async def main(connection):
     topLeft = await middleLeft.async_split_pane(vertical=False, before=True)
     topCenter = await middleCenter.async_split_pane(vertical=False,before=True)
     topRight = await middleRight.async_split_pane(vertical=False, before=True)
+
+    # This contains many panes, some of which you may not want to utilize. If that is the case, proceed to the next block of code and change any existing command to `exit`
 
     await bottomLeft.async_activate()
     await bottomLeft.async_send_text("bottomLeft\n", suppress_broadcast=True)
@@ -29,6 +32,8 @@ async def main(connection):
     await topLeft.async_send_text("topLeft\n", suppress_broadcast=True)
     await topCenter.async_send_text("topCenter\n", suppress_broadcast=True)
     await topRight.async_send_text("topRight\n", suppress_broadcast=True)
+
+    # As mentioned previously, simply replace your `ssh` command with `exit` and the extra pane(s) will close immediately
     
     await topLeft.async_send_text("exit\n", suppress_broadcast=True)
     await middleLeft.async_send_text("ssh svr-media-01.tcudelocal.net\n", suppress_broadcast=True)
@@ -39,6 +44,8 @@ async def main(connection):
     await topRight.async_send_text("ssh svr-monitoring-01.tcudelocal.net\n", suppress_broadcast=True)
     await middleRight.async_send_text("exit\n", suppress_broadcast=True)
     await bottomRight.async_send_text("exit\n", suppress_broadcast=True)
+
+    # This contains the command you'd like to be run once each pane is SSH'd into their respective host. Ensure the panes mentioned here are correct
 
     broadcast_to = [  middleLeft, bottomLeft, topCenter, middleCenter, bottomCenter,  topRight  ]
     for session in broadcast_to:
