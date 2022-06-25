@@ -42,8 +42,8 @@ async def main(connection):
     await middleCenter.async_send_text("ssh svr-adguard-02.tcudelocal.net\n", suppress_broadcast=True)
     await bottomCenter.async_send_text("ssh svr-librenms-01.tcudelocal.net\n", suppress_broadcast=True)
     await topRight.async_send_text("ssh svr-monitoring-01.tcudelocal.net\n", suppress_broadcast=True)
-    await middleRight.async_send_text("exit\n", suppress_broadcast=True)
-    await bottomRight.async_send_text("exit\n", suppress_broadcast=True)
+    await middleRight.async_send_text("ssh svr-docker-external-01.tcudelocal.net\n", suppress_broadcast=True)
+    await bottomRight.async_send_text("ssh svr-docker-internal-01.tcudelocal.net\n", suppress_broadcast=True)
 
     # This contains the command you'd like to be run once each pane is SSH'd into their respective host. Ensure the panes mentioned here are correct
 
