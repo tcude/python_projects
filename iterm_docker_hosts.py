@@ -35,7 +35,7 @@ async def main(connection):
 
     # As mentioned previously, simply replace your `ssh` command with `exit` and the extra pane(s) will close immediately
     
-    await topLeft.async_send_text("exit\n", suppress_broadcast=True)
+    await topLeft.async_send_text("ssh svr-ansible-01.tcudelocal.net\n", suppress_broadcast=True)
     await middleLeft.async_send_text("ssh svr-media-01.tcudelocal.net\n", suppress_broadcast=True)
     await bottomLeft.async_send_text("ssh svr-pykms-01.tcudelocal.net\n", suppress_broadcast=True)
     await topCenter.async_send_text("ssh svr-adguard-01.tcudelocal.net\n", suppress_broadcast=True)
@@ -47,8 +47,32 @@ async def main(connection):
 
     # This contains the command you'd like to be run once each pane is SSH'd into their respective host. Ensure the panes mentioned here are correct
 
-    broadcast_to = [  middleLeft, bottomLeft, topCenter, middleCenter, bottomCenter,  topRight  ]
+    broadcast_to = [  middleLeft, middleRight, bottomRight  ]
     for session in broadcast_to:
         await session.async_send_text("cd /home/tcude/docker && ls -lah\n")
+
+    broadcast_to = [  topLeft  ]
+    for session in broadcast_to:
+        await session.async_send_text("cd /home/tcude/ansible/scripts && ls -lah\n")
+
+    broadcast_to = [  bottomLeft  ]
+    for session in broadcast_to:
+        await session.async_send_text("cd /home/tcude/docker/pykms && ls -lah\n")
+
+    broadcast_to = [  topCenter  ]
+    for session in broadcast_to:
+        await session.async_send_text("cd /home/tcude/docker/adguard && ls -lah\n")
+
+    broadcast_to = [  middleCenter  ]
+    for session in broadcast_to:
+        await session.async_send_text("cd /home/tcude/docker/adguard && ls -lah\n")
+
+    broadcast_to = [  bottomCenter  ]
+    for session in broadcast_to:
+        await session.async_send_text("cd /home/tcude/docker/librenms && ls -lah\n")
+
+    broadcast_to = [  topRight  ]
+    for session in broadcast_to:
+        await session.async_send_text("cd /home/tcude/docker/grafana_influxdb && ls -lah\n")
 
 iterm2.run_until_complete(main)
